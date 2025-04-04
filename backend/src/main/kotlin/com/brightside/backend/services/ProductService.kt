@@ -52,8 +52,7 @@ object ProductService {
                 )
             } catch (e: Exception) {
                 // Log the error for debugging
-                println("Error in addProduct: ${e.message}")
-                e.printStackTrace()
+                logger.error("Error in addProduct: ${e.message}", e)
                 null
             }
         }
