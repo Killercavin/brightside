@@ -1,6 +1,6 @@
 package com.brightside.backend
 
-import com.brightside.backend.com.brightside.backend.module
+import com.brightside.backend.module
 import io.ktor.client.request.*
 import io.ktor.http.*
 import io.ktor.server.testing.*

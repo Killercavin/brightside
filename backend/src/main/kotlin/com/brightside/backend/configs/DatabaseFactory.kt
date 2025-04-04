@@ -1,4 +1,4 @@
-package com.brightside.backend.config
+package com.brightside.backend.configs
 
 import com.brightside.backend.models.ProductTable
 import com.zaxxer.hikari.HikariConfig
