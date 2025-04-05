@@ -1,4 +1,4 @@
-package com.brightside.backend.config
+package com.brightside.backend.configs
 
 import com.brightside.backend.models.ProductTable
 import com.zaxxer.hikari.HikariConfig
@@ -27,7 +27,7 @@ object DatabaseFactory {
     }
 
     private fun hikari(): HikariDataSource {
-        val dbUrl = EnvConfig.getEnv("DATABASE_URL", "jdbc:postgresql://localhost:5432/brightside")
+        val dbUrl = EnvConfig.getEnv("DATABASE_URL", "")
         val dbUser = EnvConfig.getEnv("DATABASE_USER", "")
         val dbPassword = EnvConfig.getEnv("DATABASE_PASSWORD", "")
         val maxPoolSize = EnvConfig.getEnv("DATABASE_MAX_POOL_SIZE", "10")?.toIntOrNull() ?: 10

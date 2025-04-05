@@ -1,4 +1,4 @@
-package com.brightside.backend.config
+package com.brightside.backend.configs
 
 import org.slf4j.LoggerFactory
 import java.io.File
