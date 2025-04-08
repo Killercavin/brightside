@@ -8,6 +8,9 @@ import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.math.BigDecimal
 import java.time.Instant
+import mu.KotlinLogging
+
+private val logger = KotlinLogging.logger {}
 
 object ProductService {
     // addProduct function that handles insertion and fetching within the same method

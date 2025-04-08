@@ -1,4 +1,4 @@
-package com.brightside.backend.configs
+package com.brightside.backend.security
 
 import io.ktor.server.application.*
 
