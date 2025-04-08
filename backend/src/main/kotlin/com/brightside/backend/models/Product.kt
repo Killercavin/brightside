@@ -13,7 +13,7 @@ data class Product(
     @Contextual val price: BigDecimal, // Add @Contextual
     val description: String,
     val category: String,
-    val categoryId: Int?,
+    val categoryId: Int,
     @Contextual val createdAt: Instant, // Add @Contextual
     @Contextual val updatedAt: Instant, // Add @Contextual
 )
