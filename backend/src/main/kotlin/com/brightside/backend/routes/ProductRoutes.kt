@@ -1,9 +1,9 @@
 package com.brightside.backend.routes
 
 import com.brightside.backend.controllers.ProductController
-import com.brightside.backend.routes.requests.AddProductRequest
-import com.brightside.backend.routes.requests.PatchProductRequest
-import com.brightside.backend.routes.requests.UpdateProductRequest
+import com.brightside.backend.routes.requests.products.AddProductRequest
+import com.brightside.backend.routes.requests.products.PatchProductRequest
+import com.brightside.backend.routes.requests.products.UpdateProductRequest
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -18,7 +18,7 @@ fun Route.productRoutes() {
             try {
                 val products = ProductController.getAllProducts()
                 if (products.isNotEmpty()) {
-                    call.respond(products)  // Automatically serialized to JSON
+                    call.respond(HttpStatusCode.OK, products)  // Automatically serialized to JSON
                 } else {
                     call.respond(HttpStatusCode.NoContent, "No products found")
                 }

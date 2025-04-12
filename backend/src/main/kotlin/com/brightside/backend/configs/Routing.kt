@@ -1,5 +1,6 @@
 package com.brightside.backend.configs
 
+import com.brightside.backend.routes.categoryRoutes
 import com.brightside.backend.routes.productRoutes
 import io.ktor.server.application.*
 import io.ktor.server.response.*
@@ -13,5 +14,8 @@ fun Application.configureRouting() {
 
         // product routes
         productRoutes()
+
+        // category routes
+        categoryRoutes()
     }
 }

@@ -1,4 +1,4 @@
-package com.brightside.backend.routes.requests
+package com.brightside.backend.routes.requests.products
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
