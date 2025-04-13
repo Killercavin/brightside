@@ -1,9 +1,9 @@
 package com.brightside.backend.controllers
 
 import com.brightside.backend.models.Product
-import com.brightside.backend.routes.requests.AddProductRequest
-import com.brightside.backend.routes.requests.PatchProductRequest
-import com.brightside.backend.routes.requests.UpdateProductRequest
+import com.brightside.backend.routes.requests.products.AddProductRequest
+import com.brightside.backend.routes.requests.products.PatchProductRequest
+import com.brightside.backend.routes.requests.products.UpdateProductRequest
 import com.brightside.backend.services.ProductService
 
 object ProductController {

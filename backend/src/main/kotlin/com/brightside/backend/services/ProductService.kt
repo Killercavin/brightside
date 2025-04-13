@@ -76,13 +76,6 @@ object ProductService {
             .map { mapRowToProduct(it) }
     }
 
-    // Fetch products by a specific category ID
-    suspend fun getProductsByCategory(categoryId: Int): List<Product> = dbQuery {
-        (ProductTable innerJoin CategoryTable)
-            .select { ProductTable.categoryId eq categoryId }
-            .map { mapRowToProduct(it) }
-    }
-
     // update products
     suspend fun updateProduct(
         id: Int,
@@ -157,7 +150,7 @@ object ProductService {
     }
 
     // Helper function to map a result row to a Product object
-    private fun mapRowToProduct(row: ResultRow): Product {
+    fun mapRowToProduct(row: ResultRow): Product {
         return Product(
             id = row[ProductTable.id],
             name = row[ProductTable.name],
