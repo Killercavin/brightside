@@ -60,7 +60,7 @@ fun Route.productRoutes() {
                 if (response != null) {
                     call.respond(HttpStatusCode.Created, response)
                 } else {
-                    call.respond(HttpStatusCode.InternalServerError, "Failed to add product")
+                    call.respond(HttpStatusCode.InternalServerError, "Error adding product")
                 }
             } catch (e: Exception) {
                 // Added this for debugging

@@ -49,13 +49,13 @@ object ProductService {
                     description = product[ProductTable.description],
                     price = product[ProductTable.price],
                     categoryId = product[ProductTable.categoryId],
-                    category = "", // leaving blank will handle later
+                    category = CategoryTable.name.toString(),
                     createdAt = product[ProductTable.createdAt],
                     updatedAt = product[ProductTable.updatedAt]
                 )
             } catch (e: Exception) {
                 // Log the error for debugging
-                logger.error("Error in addProduct: ${e.message}", e)
+                logger.error("Error adding product: ${e.message}")
                 null
             }
         }
@@ -127,7 +127,7 @@ object ProductService {
             return null
         }
 
-        val updateResult = dbQuery {
+        val patchResult = dbQuery {
             ProductTable.update({ ProductTable.id eq id }) { stmt ->
                 name?.let { stmt[ProductTable.name] = it }
                 description?.let { stmt[ProductTable.description] = it }
@@ -137,7 +137,7 @@ object ProductService {
             }
         }
 
-        return if (updateResult > 0) {
+        return if (patchResult > 0) {
             getProductById(id)
         } else {
             null
