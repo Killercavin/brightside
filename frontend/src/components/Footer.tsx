@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import {
-    Mail,
-    MapPin,
-    Phone
-} from "lucide-react";
+// import {
+//     Mail,
+//     MapPin,
+//     Phone
+// } from "lucide-react";
 
 import { 
     FaFacebook, 
@@ -54,7 +54,7 @@ export default function Footer() {
                         </Link>
                     </div>
                     <p className="mb-6">
-                        BrightSide offers premium products with exceptional service. We're dedicated to quality, sustainability, and customer satisfaction.
+                        BrightSide offers premium products with exceptional service. We&apos;re dedicated to quality, sustainability, and customer satisfaction.
                     </p>
                     <div className="flex justify-center sm:justify-start gap-4">
                         <Link href="/" className="hover:text-green-600 dark:hover:text-green-700 transition-colors">
