@@ -47,7 +47,7 @@ export default function Header() {
         {/* Mobile Toggle */}
         <button
           onClick={toggleMenu}
-          className="md:hidden text-gray-700 dark:text-gray-300"
+          className="md:hidden text-gray-700 dark:text-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
           aria-label="Toggle menu"
         >
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
