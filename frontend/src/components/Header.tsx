@@ -47,7 +47,7 @@ export default function Header() {
         {/* Mobile Toggle */}
         <button
           onClick={toggleMenu}
-          className="md:hidden text-gray-700 dark:text-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50 rounded-md p-1"
+          className="md:hidden text-gray-700 dark:text-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-green-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-800"
           aria-label="Toggle menu"
         >
           {menuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -56,7 +56,7 @@ export default function Header() {
 
       {/* Mobile Nav */}
       {menuOpen && (
-        <nav className="md:hidden px-6 pb-5 pt-2 space-y-3 bg-white dark:bg-gray-900 border-t dark:border-gray-800 animate-fadeIn">
+        <nav className="md:hidden px-6 pb-5 pt-2 space-y-3 bg-white dark:bg-inherit border-t dark:border-gray-800 animate-fadeIn">
           {navLinks.map((link) => (
             <Link
               key={link.href}

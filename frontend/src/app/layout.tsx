@@ -16,7 +16,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BrightSide Stores",
+  title: "BrightSide Stores | Medical Equipment and Supplies Hub",
   description: "Medical Equipment and Supplies Hub",
 };
 
