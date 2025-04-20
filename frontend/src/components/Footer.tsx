@@ -5,15 +5,14 @@ import Image from "next/image";
 import {
     Mail,
     MapPin,
-    Phone,
-    Facebook,
-    Instagram,
-    Twitter,
-    Youtube,
-    // CreditCard,
-    // Calendar,
-    // ShieldCheck,
+    Phone
 } from "lucide-react";
+
+import { 
+    FaFacebook, 
+    FaInstagram, 
+    FaTwitter, 
+    FaYoutube } from 'react-icons/fa';
 
 export default function Footer() {
     return (
@@ -51,7 +50,6 @@ export default function Footer() {
                                 alt="BrightSide Stores Logo"
                                 width={100}
                                 height={100}
-                                className="rounded"
                             />
                         </Link>
                     </div>
@@ -59,20 +57,20 @@ export default function Footer() {
                         BrightSide offers premium products with exceptional service. We're dedicated to quality, sustainability, and customer satisfaction.
                     </p>
                     <div className="flex justify-center sm:justify-start gap-4">
-                        <Link href="#" className="hover:text-green-600 dark:hover:text-green-400 transition-colors">
-                            <Facebook className="h-5 w-5" />
+                        <Link href="/" className="hover:text-green-600 dark:hover:text-green-700 transition-colors">
+                            <FaFacebook className="h-5 w-5" />
                             <span className="sr-only">Facebook</span>
                         </Link>
-                        <Link href="#" className="hover:text-green-600 dark:hover:text-green-400 transition-colors">
-                            <Instagram className="h-5 w-5" />
+                        <Link href="/" className="hover:text-green-600 dark:hover:text-green-700 transition-colors">
+                            <FaInstagram className="h-5 w-5" />
                             <span className="sr-only">Instagram</span>
                         </Link>
-                        <Link href="#" className="hover:text-green-600 dark:hover:text-green-400 transition-colors">
-                            <Twitter className="h-5 w-5" />
+                        <Link href="/" className="hover:text-green-600 dark:hover:text-green-700 transition-colors">
+                            <FaTwitter className="h-5 w-5" />
                             <span className="sr-only">Twitter</span>
                         </Link>
-                        <Link href="#" className="hover:text-green-600 dark:hover:text-green-400 transition-colors">
-                            <Youtube className="h-5 w-5" />
+                        <Link href="/" className="hover:text-green-600 dark:hover:text-green-700 transition-colors">
+                            <FaYoutube className="h-5 w-5" />
                             <span className="sr-only">YouTube</span>
                         </Link>
                     </div>
@@ -83,16 +81,16 @@ export default function Footer() {
                     <h3 className="font-medium text-gray-900 dark:text-white text-lg mb-6">Quick Links</h3>
                     <ul className="space-y-4">
                         {[
-                            { href: "/shop", label: "Shop All" },
-                            { href: "/new-arrivals", label: "New Arrivals" },
-                            { href: "/bestsellers", label: "Bestsellers" },
-                            { href: "/sales", label: "Sales & Offers" },
-                            { href: "/gift-cards", label: "Gift Cards" },
+                            { href: "/", label: "Home" },
+                            { href: "/shop", label: "Shop" },
+                            { href: "/about", label: "About Us" },
+                            { href: "/contact", label: "Contact Us" },
+                            { href: "/blog", label: "Blog" },
                         ].map((link) => (
                             <li key={link.href}>
                                 <Link
                                     href={link.href}
-                                    className="hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                                    className="hover:text-green-600 dark:hover:text-green-700 transition-colors"
                                 >
                                     {link.label}
                                 </Link>
@@ -103,19 +101,40 @@ export default function Footer() {
 
                 {/* Info */}
                 <div>
-                    <h3 className="font-medium text-gray-900 dark:text-white text-lg mb-6">Information</h3>
+                    <h3 className="font-medium text-gray-900 dark:text-white text-lg mb-6">Policy</h3>
                     <ul className="space-y-4">
                         {[
-                            { href: "/about", label: "About Us" },
-                            { href: "/sustainability", label: "Sustainability" },
                             { href: "/privacy-policy", label: "Privacy Policy" },
                             { href: "/terms", label: "Terms & Conditions" },
-                            { href: "/faq", label: "FAQ" },
+                            { href: "/faq", label: "FAQs" },
                         ].map((link) => (
                             <li key={link.href}>
                                 <Link
                                     href={link.href}
-                                    className="hover:text-green-600 dark:hover:text-green-400 transition-colors"
+                                    className="hover:text-green-600 dark:hover:text-green-700 transition-colors"
+                                >
+                                    {link.label}
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+
+                {/* Products */}
+                <div>
+                    <h3 className="font-medium text-gray-900 dark:text-white text-lg mb-6">Our Products</h3>
+                    <ul className="space-y-4">
+                        {[
+                            { href: "/medical-equipments", label: "Medical Equipments" },
+                            { href: "/mobility-aids-support", label: "Mobility Aids & Support" },
+                            { href: "/hospital-beds", label: "Hospital Beds" },
+                            { href: "/health-monitoring", label: "Health Monitoring Devices" },
+                            { href: "/medical-supplies", label: "Medical Supplies" },
+                        ].map((link) => (
+                            <li key={link.href}>
+                                <Link
+                                    href={link.href}
+                                    className="hover:text-green-600 dark:hover:text-green-700 transition-colors"
                                 >
                                     {link.label}
                                 </Link>
@@ -126,7 +145,7 @@ export default function Footer() {
 
                 {/* Contact */}
                 <div>
-                    <h3 className="font-medium text-gray-900 dark:text-white text-lg mb-6">Contact Us</h3>
+                    {/* <h3 className="font-medium text-gray-900 dark:text-white text-lg mb-6">Contact Us</h3>
                     <ul className="space-y-4">
                         <li className="flex items-start justify-center sm:justify-start gap-3">
                             <MapPin className="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" />
@@ -144,10 +163,10 @@ export default function Footer() {
                             <span>support@brightsidestores.co.ke</span>
                         </li>
 
-                    </ul>
+                    </ul> */}
 
                     {/* Newsletter */}
-                    <div className="mt-6">
+                    {/* <div className="mt-6">
                         <h4 className="font-medium text-gray-900 dark:text-white text-sm mb-3">
                             Subscribe to our newsletter
                         </h4>
@@ -165,7 +184,7 @@ export default function Footer() {
                                 Sign Up
                             </button>
                         </form>
-                    </div>
+                    </div> */}
                 </div>
             </div>
 
