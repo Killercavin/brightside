@@ -7,7 +7,7 @@ plugins {
     kotlin("plugin.serialization") version "1.9.0"
 }
 
-group = "com.ecliptacare.backend"
+group = "com.brightside.backend"
 version = "0.0.1"
 
 application {

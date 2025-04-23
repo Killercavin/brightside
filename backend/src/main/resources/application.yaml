@@ -1,6 +1,6 @@
 ktor:
   application:
     modules:
-      - com.ecliptacare.backend.ApplicationKt.module
+      - com.brightside.backend.ApplicationKt.module
   deployment:
     port: 8080

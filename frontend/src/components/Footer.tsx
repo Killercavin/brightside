@@ -1,11 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import {
     Mail,
     MapPin,
     Phone,
-    Leaf
 } from "lucide-react";
 import {
     FaFacebook,
@@ -22,12 +22,19 @@ export default function Footer() {
 
                 {/* About section */}
                 <div>
-                    <div className="flex items-center gap-2 mb-4">
-                        <Leaf color="#4CAF50" size={32} />
-                        <span className="text-2xl font-bold text-gray-800 dark:text-white">EcliptaCare</span>
+                <div className="mb-6 flex justify-center sm:justify-start">
+                        <Link href="/" className="inline-block">
+                            <Image
+                                src="/brightside.png"
+                                alt="BrightSide Stores Logo"
+                                width={100}
+                                height={100}
+                                className="rounded"
+                            />
+                        </Link>
                     </div>
                     <p className="mb-6">
-                        EcliptaCare offers premium products with exceptional service. We're dedicated to quality, sustainability, and customer satisfaction.
+                        BrightSide Stores offers premium products with exceptional service. We're dedicated to quality, sustainability, and customer satisfaction.
                     </p>
                     <div className="flex justify-center sm:justify-start gap-4">
                         <Link href="/" className="hover:text-green-600 dark:hover:text-green-700 transition-colors">
@@ -120,7 +127,7 @@ export default function Footer() {
                         <li className="flex items-start justify-center sm:justify-start gap-3">
                             <MapPin className="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" />
                             <span>
-                                EcliptaCare<br />
+                                BrightSide Stores<br />
                                 Office 101, The Healthcare Hub<br />
                                 32–34 Maple Street<br />
                                 Bloomsbury, London W1T 6HP<br />
@@ -136,7 +143,7 @@ export default function Footer() {
                         </li>
                         <li className="flex items-start justify-center sm:justify-start gap-3 break-words">
                             <Mail className="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" />
-                            <span>support@ecliptacare.com</span>
+                            <span>support@brightsidestores.com</span>
                         </li>
                     </ul>
 
@@ -169,7 +176,7 @@ export default function Footer() {
             <div className="border-t border-gray-200 dark:border-gray-800 py-6">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row justify-between items-center gap-4">
                     <div className="text-center sm:text-left">
-                        © {new Date().getFullYear()} EcliptaCare. All rights reserved.
+                        © {new Date().getFullYear()} BrightSide Stores. All rights reserved.
                     </div>
                 </div>
             </div>
