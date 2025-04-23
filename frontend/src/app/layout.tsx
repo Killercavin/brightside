@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BrightSide Stores | Medical Equipment and Supplies Hub",
-  description: "Medical Equipment and Supplies Hub",
+  title: "EcliptaCare | We're caring, natural, and here to help you thrive with healthcare products",
+  description: "We're caring, natural, and here to help you thrive with healthcare products",
 };
 
 export default function RootLayout({

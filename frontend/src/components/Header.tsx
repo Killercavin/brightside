@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import Image from "next/image";
-import { Menu, X } from "lucide-react";
+import { Leaf, Menu, X } from "lucide-react";
 
 const navLinks = [
   { href: "/shop", label: "Shop" },
@@ -20,15 +19,20 @@ export default function Header() {
     <header className="border-b dark:border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <Image
-            src="/brightside.png"
-            alt="Logo"
-            width={100}
-            height={100}
-            className="rounded"
-            priority={false}
-            loading="lazy"
+          {/* Leaf Icon with fixed responsive size */}
+          <Leaf
+            color="#4CAF50"
+            size={48} // Keep it larger on desktop
+            className="sm:w-12 sm:h-12" // Make it responsive, smaller on mobile screens
           />
+          <div className="flex flex-col items-center sm:items-start">
+            <span className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white">
+              EcliptaCare
+            </span>
+            <span className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-1 sm:mt-0 text-center sm:text-left">
+              We&apos;re caring, natural, and here to help you thrive with healthcare products.
+            </span>
+          </div>
         </Link>
 
         {/* Desktop Nav */}
