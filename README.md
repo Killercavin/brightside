@@ -1,1 +1,1 @@
-# EcliptaCare
+# BrightSide Stores
