@@ -11,7 +11,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.categoryRoutes() {
-    route("/categories") {
+    route("/api/categories") {
         // get all categories
         get {
             try {

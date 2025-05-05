@@ -1,6 +1,6 @@
 package com.brightside.backend.configs
 
-import com.brightside.backend.models.ProductTable
+import com.brightside.backend.models.table.ProductTable
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import kotlinx.coroutines.Dispatchers

@@ -11,7 +11,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.productRoutes() {
-    route("/products") {
+    route("/api/products") {
 
         // get products
         get {
