@@ -2,8 +2,8 @@ package com.brightside.backend.services
 
 import com.brightside.backend.configs.DatabaseFactory.dbQuery
 import com.brightside.backend.models.Product
-import com.brightside.backend.models.ProductTable
-import com.brightside.backend.models.CategoryTable
+import com.brightside.backend.models.table.ProductTable
+import com.brightside.backend.models.table.CategoryTable
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import java.math.BigDecimal
