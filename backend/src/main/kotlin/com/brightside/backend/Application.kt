@@ -1,13 +1,11 @@
 package com.brightside.backend
 
 import com.brightside.backend.configs.*
-import com.brightside.backend.configs.configureSecurity
 import com.brightside.backend.models.CartSession
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.serialization.kotlinx.json.*
-import io.ktor.server.sessions.Sessions
-import io.ktor.server.sessions.cookie
+import io.ktor.server.sessions.*
 import kotlinx.serialization.json.Json
 
 fun main(args: Array<String>) {
@@ -15,6 +13,7 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    // installing content negotiation for JSON
     install(ContentNegotiation) {
         json(Json {
             prettyPrint = true
@@ -28,8 +27,10 @@ fun Application.module() {
     install(Sessions) {
         cookie<CartSession>("cart_session") {
             cookie.path = "/"
-            cookie.maxAgeInSeconds = 60 * 60 * 24 * 30 // 30 days
+            cookie.maxAgeInSeconds = 60 * 60 * 24 * 24 // 24 hours
             cookie.httpOnly = true
+            cookie.extensions["SameSite"] = "Lax" // Or "None" if cross-site
+            cookie.secure = true // Set to true only if using HTTPS
         }
     }
 
