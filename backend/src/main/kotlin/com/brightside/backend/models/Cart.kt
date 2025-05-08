@@ -4,7 +4,7 @@ import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class CartItem(val productId: Int, val quantity: Int)
+data class CartItem(val productId: Int, var quantity: Int)
 
 @Serializable
 data class CartSession(val items: MutableList<CartItem> = mutableListOf())

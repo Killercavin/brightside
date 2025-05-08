@@ -76,7 +76,7 @@ fun Route.categoryRoutes() {
                 val response = CategoryController.addCategory(request)
 
                 if (response != null) {
-                    call.respond(HttpStatusCode.OK, response)
+                    call.respond(HttpStatusCode.Created, response)
                 } else {
                     call.respond(HttpStatusCode.BadRequest, "Error adding category")
                 }

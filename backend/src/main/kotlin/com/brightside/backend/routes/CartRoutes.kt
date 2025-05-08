@@ -13,12 +13,14 @@ fun Route.cartRoutes(cartController: CartController) {
     val logger = LoggerFactory.getLogger("CartRoutes")
 
     route("/api/cart") {
+        // get the cart items
         get {
             try {
                 val response = withContext(Dispatchers.IO) {
                     cartController.getCart(call)
                 }
-                call.respond(response)
+                call.respond(HttpStatusCode.OK, response)
+
             } catch (e: Exception) {
                 logger.error("Error retrieving cart", e)
                 call.respond(
@@ -28,6 +30,23 @@ fun Route.cartRoutes(cartController: CartController) {
                         message = "Unable to retrieve cart at this time"
                     )
                 )
+            }
+        }
+
+        // post to the cart
+        post {
+            try {
+                val response = withContext(Dispatchers.IO) {
+                    cartController.addToCart(call)
+                }
+                call.respond(HttpStatusCode.Created, response)
+            } catch (e: Exception) {
+                logger.error("Error adding cart", e)
+                call.respond(HttpStatusCode.InternalServerError, ApiResponse<Unit>(
+                    success = false,
+                    message = "Unable to add product to cart",
+                    data = null
+                ))
             }
         }
     }
