@@ -39,7 +39,7 @@ fun Route.cartRoutes(cartController: CartController) {
                 val response = withContext(Dispatchers.IO) {
                     cartController.addToCart(call)
                 }
-                call.respond(HttpStatusCode.OK, response)
+                call.respond(HttpStatusCode.Created, response)
             } catch (e: Exception) {
                 logger.error("Error adding cart", e)
                 call.respond(HttpStatusCode.InternalServerError, ApiResponse<Unit>(
