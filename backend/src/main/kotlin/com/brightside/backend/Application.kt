@@ -27,7 +27,7 @@ fun Application.module() {
     install(Sessions) {
         cookie<CartSession>("cart_session") {
             cookie.path = "/"
-            cookie.maxAgeInSeconds = 60 * 60 * 24 * 24 // 24 hours
+            cookie.maxAgeInSeconds = 60 * 60 * 24 // 24 hours
             cookie.httpOnly = true
             cookie.extensions["SameSite"] = "Lax" // Or "None" if cross-site
             cookie.secure = true // Set to true only if using HTTPS
