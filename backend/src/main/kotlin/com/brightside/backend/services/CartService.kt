@@ -37,7 +37,7 @@ class CartService(private val productService: ProductService) {
             it.productId == productId
         }
 
-        // logic for handle the existing
+        // Handle existing cart item to update its quantity
         if (existingItem != null) {
             existingItem.quantity += quantity // increment the item quantity
         } else {
