@@ -4,6 +4,7 @@ import com.brightside.backend.models.Cart
 import com.brightside.backend.models.CartItem
 import com.brightside.backend.models.CartProduct
 import com.brightside.backend.models.CartSession
+import com.brightside.backend.routes.requests.cart.UpdateCartRequest
 
 class CartService(private val productService: ProductService) {
     // get cart details
@@ -30,7 +31,7 @@ class CartService(private val productService: ProductService) {
     // add items to the cart
     suspend fun addToCart(session: CartSession, productId: Int, quantity: Int): Boolean {
         // check if the product exists in the cart and return false if not found
-        val product = productService.getProductById(productId) ?: return false
+        productService.getProductById(productId) ?: return false
 
         // for existing item increase the quantity or add the product finally
         val existingItem = session.items.find {
@@ -45,5 +46,22 @@ class CartService(private val productService: ProductService) {
         }
 
         return true
+    }
+
+    // update cart items
+    suspend fun updateCart(session: CartSession, request: UpdateCartRequest): Cart {
+        val updatedItems = session.items.toMutableList()
+        val index = session.items.indexOfFirst { it.productId == request.productId }
+        if (index != -1) {
+            if (request.quantity <= 0) {
+                updatedItems.removeAt(index)
+            } else {
+                updatedItems[index] = updatedItems[index].copy(quantity = request.quantity)
+            }
+        }
+
+        // session update
+        session.items = updatedItems
+        return getCart(session)
     }
 }
