@@ -49,5 +49,24 @@ fun Route.cartRoutes(cartController: CartController) {
                 ))
             }
         }
+
+        // put to the cart
+        patch {
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    cartController.updateCart(call)
+                }
+
+                val status = if (result.success) HttpStatusCode.OK else HttpStatusCode.BadRequest
+                call.respond(status, result)
+            } catch (e: Exception) {
+                logger.error("Error updating cart", e)
+                call.respond(
+                    HttpStatusCode.InternalServerError,
+                    ApiResponse(false, "Unable to update cart", null)
+                )
+            }
+        }
+
     }
 }

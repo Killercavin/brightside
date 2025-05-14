@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 data class CartItem(val productId: Int, var quantity: Int)
 
 @Serializable
-data class CartSession(val items: MutableList<CartItem> = mutableListOf())
+data class CartSession(var items: MutableList<CartItem> = mutableListOf())
 
 @Serializable
 data class CartProduct(
