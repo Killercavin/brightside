@@ -64,4 +64,12 @@ class CartService(private val productService: ProductService) {
         session.items = updatedItems
         return getCart(session)
     }
+
+    // remove an item from the cart using productId
+    suspend fun removeFromCart(session: CartSession, productId: Int): Cart {
+        val updatedItems = session.items.filter { it.productId != productId }.toMutableList()
+        session.items = updatedItems
+        return getCart(session)
+    }
+
 }
