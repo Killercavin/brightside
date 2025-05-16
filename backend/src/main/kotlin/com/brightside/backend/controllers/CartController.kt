@@ -19,7 +19,7 @@ class CartController(private val cartService: CartService) {
         val cart = cartService.getCart(session)
 
         if (cart.items.isEmpty()) {
-            ApiResponse(
+            return ApiResponse(
                 success = false, // or true depending on your design—this is a design choice
                 message = "Your cart is empty",
                 data = Cart(items = emptyList(), totalPrice = 0.0)
