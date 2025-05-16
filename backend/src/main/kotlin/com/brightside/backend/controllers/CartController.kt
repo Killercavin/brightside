@@ -4,6 +4,7 @@ import com.brightside.backend.models.ApiResponse
 import com.brightside.backend.models.Cart
 import com.brightside.backend.models.CartSession
 import com.brightside.backend.routes.requests.cart.AddToCartRequest
+import com.brightside.backend.routes.requests.cart.QuantityUpdateRequest
 import com.brightside.backend.routes.requests.cart.UpdateCartRequest
 import com.brightside.backend.services.CartService
 import io.ktor.server.application.*
@@ -57,28 +58,38 @@ class CartController(private val cartService: CartService) {
     }
 
     // update cart items
-    suspend fun updateCart(call: ApplicationCall): ApiResponse<String> {
+    suspend fun updateCart(call: ApplicationCall, productId: Int): ApiResponse<Cart> {
         val session = call.sessions.get<CartSession>() ?: CartSession()
+        val body = call.receive<QuantityUpdateRequest>()
 
-        val updateRequest = call.receive<UpdateCartRequest>()
+        val updateRequest = UpdateCartRequest(productId = productId, quantity = body.quantity)
 
-        if (updateRequest.quantity < 0) {
-            return ApiResponse(false, "Quantity must be zero or greater")
-        }
-
-        // Call the service function instead
         val updatedCart = cartService.updateCart(session, updateRequest)
-
-        // Save the updated session back
         call.sessions.set(session)
 
-        val wasProductFound = updatedCart.items.any { it.productId == updateRequest.productId }
+        val wasFound = updatedCart.items.any { it.productId == productId }
 
-        return if (wasProductFound || updateRequest.quantity == 0) {
-            ApiResponse(true, "Cart updated successfully")
+        return if (wasFound || body.quantity == 0) {
+            ApiResponse(true, "Cart updated", updatedCart)
         } else {
-            ApiResponse(false, "Product not found in cart")
+            ApiResponse(false, "Product not found in cart", updatedCart)
         }
+    }
+
+
+    // remove item from the cart
+    suspend fun removeFromCart(call: ApplicationCall, productId: Int): ApiResponse<Cart> {
+        val session = call.sessions.get<CartSession>() ?: CartSession()
+
+        val exists = session.items.any { it.productId == productId }
+        if (!exists) {
+            return ApiResponse(false, "Product not found")
+        }
+
+        val updatedCart = cartService.removeFromCart(session, productId)
+        call.sessions.set(session)
+
+        return ApiResponse(true, "Product removed successfully", updatedCart)
     }
 
 }
