@@ -18,11 +18,19 @@ class CartController(private val cartService: CartService) {
         val session = call.sessions.get<CartSession>() ?: CartSession()
         val cart = cartService.getCart(session)
 
-        return ApiResponse(
-            success = true,
-            message = if (cart.items.isEmpty()) "Your cart is empty" else "Cart retrieved successfully",
-            data = cart
-        )
+        if (cart.items.isEmpty()) {
+            return ApiResponse(
+                success = false, // or true depending on your design—this is a design choice
+                message = "Your cart is empty",
+                data = Cart(items = emptyList(), totalPrice = 0.0)
+            )
+        }
+
+        return  ApiResponse(
+                success = true,
+                message = "Cart retrieved successfully",
+                data = cart
+            )
     }
 
     // add item to the cart
@@ -83,13 +91,38 @@ class CartController(private val cartService: CartService) {
 
         val exists = session.items.any { it.productId == productId }
         if (!exists) {
-            return ApiResponse(false, "Product not found")
+            return ApiResponse(false, "Product not found", Cart(items = emptyList(), totalPrice = 0.0))
         }
 
         val updatedCart = cartService.removeFromCart(session, productId)
         call.sessions.set(session)
 
-        return ApiResponse(true, "Product removed successfully", updatedCart)
+        return if (updatedCart.items.isEmpty()) {
+            ApiResponse(true, "Product removed. Your cart is now empty", updatedCart)
+        } else {
+            ApiResponse(true, "Product removed successfully", updatedCart)
+        }
+    }
+
+    // clear all items from the cart
+    suspend fun clearCart(call: ApplicationCall): ApiResponse<Cart> {
+        val session = call.sessions.get<CartSession>() ?: CartSession()
+
+        // check if the cart is empty
+        if (session.items.isEmpty()) {
+            return ApiResponse(false, "Cart is already empty", Cart(
+                items = emptyList(),
+                totalPrice = 0.0,
+            ))
+        }
+
+        val clearedCart = cartService.clearCart(session)
+        call.sessions.set(session)
+        return ApiResponse(
+            true,
+            "Cart cleared successfully",
+            clearedCart
+        )
     }
 
 }

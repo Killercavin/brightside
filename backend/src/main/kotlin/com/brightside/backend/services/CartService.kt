@@ -72,4 +72,9 @@ class CartService(private val productService: ProductService) {
         return getCart(session)
     }
 
+    // clear all items from the cart
+    suspend fun clearCart(session: CartSession): Cart {
+        session.items = mutableListOf()
+        return getCart(session)
+    }
 }

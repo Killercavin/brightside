@@ -102,5 +102,26 @@ fun Route.cartRoutes(cartController: CartController) {
                 )
             }
         }
+
+        // clear cart items route
+        delete("/") {
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    cartController.clearCart(call)
+                }
+
+                val status = if (result.success) HttpStatusCode.OK else HttpStatusCode.BadRequest
+                call.respond(status, result)
+
+            } catch (e: Exception) {
+                logger.error("Error clearing cart", e)
+                call.respond(
+                    HttpStatusCode.InternalServerError,
+                    ApiResponse<Cart>(false, "Failed to clear cart", null)
+                )
+            }
+        }
+
+
     }
 }
