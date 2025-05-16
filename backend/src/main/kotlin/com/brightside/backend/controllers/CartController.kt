@@ -98,7 +98,7 @@ class CartController(private val cartService: CartService) {
         call.sessions.set(session)
 
         return if (updatedCart.items.isEmpty()) {
-            ApiResponse(false, "Product removed. Your cart is now empty", updatedCart)
+            ApiResponse(true, "Product removed. Your cart is now empty", updatedCart)
         } else {
             ApiResponse(true, "Product removed successfully", updatedCart)
         }
