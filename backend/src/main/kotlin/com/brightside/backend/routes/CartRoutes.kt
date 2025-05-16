@@ -104,7 +104,7 @@ fun Route.cartRoutes(cartController: CartController) {
         }
 
         // clear cart items route
-        delete {
+        delete("/") {
             try {
                 val result = withContext(Dispatchers.IO) {
                     cartController.clearCart(call)
