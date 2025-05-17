@@ -22,12 +22,16 @@ object ProductService {
     ): Product? {
         return dbQuery {
             try {
-                // First, verify the category exists
-                val categoryExists = CategoryTable.select { CategoryTable.id eq categoryId }.singleOrNull() != null
+                // First, verify the category exists and get its name
+                val categoryRow = CategoryTable
+                    .select { CategoryTable.id eq categoryId }
+                    .singleOrNull()
 
-                if (!categoryExists) {
+                if (categoryRow == null) {
                     return@dbQuery null // Category doesn't exist
                 }
+
+                val categoryName = categoryRow[CategoryTable.name] // ✅ fetch actual name
 
                 val id = ProductTable
                     .insertAndGetId {
@@ -42,19 +46,18 @@ object ProductService {
                 // Get the inserted product data
                 val product = ProductTable.select { ProductTable.id eq id }.single()
 
-                // Creating the Product object manually without trying to access category data
+                // Return product object with actual category name
                 Product(
                     id = product[ProductTable.id],
                     name = product[ProductTable.name],
                     description = product[ProductTable.description],
                     price = product[ProductTable.price],
                     categoryId = product[ProductTable.categoryId],
-                    category = CategoryTable.name.toString(),
+                    category = categoryName, // ✅ fixed here
                     createdAt = product[ProductTable.createdAt],
                     updatedAt = product[ProductTable.updatedAt]
                 )
             } catch (e: Exception) {
-                // Log the error for debugging
                 logger.error("Error adding product: ${e.message}")
                 null
             }
