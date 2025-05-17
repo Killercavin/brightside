@@ -13,24 +13,24 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
-    // installing content negotiation for JSON
+    // JSON serialization with custom serializers
     install(ContentNegotiation) {
         json(Json {
             prettyPrint = true
             isLenient = true
             ignoreUnknownKeys = true
-            serializersModule = appSerializersModule
+            serializersModule = appSerializersModule // hook in custom serializers here
         })
     }
 
-    // adding session
+    // Session setup
     install(Sessions) {
         cookie<CartSession>("cart_session") {
             cookie.path = "/"
             cookie.maxAgeInSeconds = 60 * 60 * 24 // 24 hours
             cookie.httpOnly = true
-            cookie.extensions["SameSite"] = "Lax" // Or "None" if cross-site
-            cookie.secure = true // Set to true only if using HTTPS
+            cookie.extensions["SameSite"] = "Lax"
+            cookie.secure = true // Enable only if using HTTPS
         }
     }
 

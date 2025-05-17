@@ -1,7 +1,6 @@
 package com.brightside.backend.routes
 
 import com.brightside.backend.controllers.ProductController
-import com.brightside.backend.routes.requests.products.AddProductRequest
 import com.brightside.backend.routes.requests.products.PatchProductRequest
 import com.brightside.backend.routes.requests.products.UpdateProductRequest
 import io.ktor.http.*
@@ -54,16 +53,9 @@ fun Route.productRoutes() {
         // add product
         post {
             try {
-                val request = call.receive<AddProductRequest>()
-                val response = ProductController.addProduct(request)
-
-                if (response != null) {
-                    call.respond(HttpStatusCode.Created, response)
-                } else {
-                    call.respond(HttpStatusCode.InternalServerError, "Error adding product")
-                }
+                val response = ProductController.addProduct(call)
+                call.respond(HttpStatusCode.Created, response)
             } catch (e: Exception) {
-                // Added this for debugging
                 call.application.log.error("Error processing request", e)
                 call.respond(HttpStatusCode.BadRequest, "Error processing request: ${e.message}")
             }
