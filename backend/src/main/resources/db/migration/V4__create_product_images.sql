@@ -1,7 +1,7 @@
 -- product_images table
 CREATE TABLE product_images (
                                 id SERIAL PRIMARY KEY,
-                                product_id INTEGER REFERENCES products(id) ON DELETE CASCADE,
+                                product_id INTEGER REFERENCES products(id) ON DELETE CASCADE ON UPDATE RESTRICT,
                                 variant_id INTEGER REFERENCES product_variants(id) ON DELETE CASCADE,
                                 url VARCHAR(500) NOT NULL,
                                 alt_text VARCHAR(255),
