@@ -1,6 +1,6 @@
 package com.brightside.backend.services
 
-import com.brightside.backend.configs.DatabaseFactory.dbQuery
+import com.brightside.backend.configs.connection.DatabaseFactory.dbQuery
 import com.brightside.backend.models.Category
 import com.brightside.backend.models.table.CategoryTable
 import com.brightside.backend.models.Product
