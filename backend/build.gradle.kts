@@ -43,5 +43,6 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-jdbc:0.41.1")
     implementation("org.postgresql:postgresql:42.7.2")
     implementation("com.zaxxer:HikariCP:5.0.1")
-    implementation("org.flywaydb:flyway-core:11.8.2") // flyway for database migrations
+    implementation("org.flywaydb:flyway-core:11.8.2") // Latest stable Flyway core
+    implementation("org.flywaydb:flyway-database-postgresql:11.8.2") // Flyway PostgreSQL plugin
 }
