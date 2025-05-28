@@ -1,5 +1,5 @@
-val kotlin_version: String by project
-val logback_version: String by project
+val kotlinVersion: String by project
+val logbackVersion: String by project
 
 plugins {
     kotlin("jvm") version "2.1.20"
@@ -26,11 +26,11 @@ dependencies {
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-auth")
     implementation("io.ktor:ktor-server-netty")
-    implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
     implementation("io.ktor:ktor-server-config-yaml")
     testImplementation("io.ktor:ktor-server-test-host")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlinVersion")
     implementation("org.jetbrains.exposed:exposed-java-time:0.43.0") // time stamp
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-core-jvm:1.8.0")
     implementation("io.ktor:ktor-server-core:2.3.7")
@@ -44,5 +44,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.2")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.flywaydb:flyway-core:11.8.2") // Latest stable Flyway core
-    implementation("org.flywaydb:flyway-database-postgresql:11.8.2") // Flyway PostgreSQL plugin
+    implementation("org.flywaydb:flyway-database-postgresql:11.8.2") // Flyway PostgresSQL plugin
+    implementation("org.mindrot:jbcrypt:0.4") // JVM bcrypt for hashing passwords
 }
+

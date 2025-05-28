@@ -1,11 +1,11 @@
-package com.brightside.backend.models.table
+package com.brightside.backend.models.products.tables
 
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ReferenceOption
 import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.javatime.timestamp
 
-object ProductVariantTable : IntIdTable("product_variants") {
+object ProductVariantTable: IntIdTable("product_variants") {
     val productId = reference("product_id", ProductTable, onDelete = ReferenceOption.CASCADE)
     val sku = varchar("sku", 64).uniqueIndex() // Unique identifier
     val color = varchar("color", 100).nullable()
