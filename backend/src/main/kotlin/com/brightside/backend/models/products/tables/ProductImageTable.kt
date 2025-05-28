@@ -1,4 +1,4 @@
-package com.brightside.backend.models.table
+package com.brightside.backend.models.products.tables
 
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.ReferenceOption

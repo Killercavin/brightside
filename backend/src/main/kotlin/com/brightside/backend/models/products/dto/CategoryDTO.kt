@@ -1,13 +1,12 @@
-package com.brightside.backend.models
+package com.brightside.backend.models.products.dto
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
-import org.jetbrains.exposed.dao.id.EntityID
 import java.time.Instant
 
 @Serializable
-data class Category(
-    @Contextual val id: EntityID<Int>,
+data class CategoryDTO(
+    @Contextual val id: Int,
     val name: String,
     val description: String,
     @Contextual val createdAt: Instant,

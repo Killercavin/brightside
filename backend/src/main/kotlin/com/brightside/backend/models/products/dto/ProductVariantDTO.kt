@@ -1,4 +1,4 @@
-package com.brightside.backend.models
+package com.brightside.backend.models.products.dto
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
@@ -6,7 +6,7 @@ import java.math.BigDecimal
 import java.time.Instant
 
 @Serializable
-data class ProductVariant(
+data class ProductVariantDTO(
     val id: Int,
     val sku: String,
     val color: String?,
