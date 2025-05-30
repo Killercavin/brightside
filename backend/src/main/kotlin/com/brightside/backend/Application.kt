@@ -1,6 +1,8 @@
 package com.brightside.backend
 
 import com.brightside.backend.configs.*
+import com.brightside.backend.routes.configureRouting
+import com.brightside.backend.security.configureSecurity
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*

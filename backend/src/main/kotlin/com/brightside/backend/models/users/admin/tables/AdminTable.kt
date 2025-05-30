@@ -1,4 +1,4 @@
-package com.brightside.backend.models.users.tables
+package com.brightside.backend.models.users.admin.tables
 
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.javatime.CurrentTimestamp

@@ -2,11 +2,11 @@ package com.brightside.backend.scripts
 
 import com.brightside.backend.configs.connection.DatabaseFactory
 import com.brightside.backend.configs.connection.EnvConfig
-import com.brightside.backend.models.users.tables.AdminTable
+import com.brightside.backend.models.users.admin.tables.AdminTable
 import mu.KotlinLogging
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.mindrot.jbcrypt.BCrypt
+import at.favre.lib.crypto.bcrypt.BCrypt
 
 private val logger = KotlinLogging.logger {}
 
@@ -33,7 +33,9 @@ fun main() {
                 return@transaction
             }
 
-            val hashedPassword = BCrypt.hashpw(rawPassword, BCrypt.gensalt())
+            // Use favre bcrypt to hash password
+            val hashedPassword = BCrypt.withDefaults()
+                .hashToString(12, rawPassword.toCharArray())
 
             AdminTable.insert {
                 it[AdminTable.name] = name
