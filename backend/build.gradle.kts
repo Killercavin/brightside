@@ -25,6 +25,7 @@ dependencies {
     // Default ktor dependencies
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-auth")
+    implementation("io.ktor:ktor-server-auth-jwt")
     implementation("io.ktor:ktor-server-netty")
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("io.github.microutils:kotlin-logging:3.0.5")
@@ -45,6 +46,8 @@ dependencies {
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.flywaydb:flyway-core:11.8.2") // Latest stable Flyway core
     implementation("org.flywaydb:flyway-database-postgresql:11.8.2") // Flyway PostgreSQL plugin
-    implementation("org.mindrot:jbcrypt:0.4") // JVM bcrypt for hashing passwords
+    implementation("at.favre.lib:bcrypt:0.10.2")
+    implementation("com.auth0:java-jwt:4.5.0")
+    implementation("io.lettuce:lettuce-core:6.6.0.RELEASE") // Lettuce core
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.10.2") // Coroutine support for Java CompletableFuture interop
 }
-

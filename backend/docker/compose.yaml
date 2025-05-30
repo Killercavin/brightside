@@ -1,0 +1,17 @@
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: brightside-dev
+    restart: always
+    ports:
+      - "6379:6379"
+    networks:
+      - brightside-net
+    volumes:
+      - redis-data:/data
+
+volumes:
+  redis-data:
+
+networks:
+  brightside-net:

@@ -1,4 +1,4 @@
-package com.brightside.backend.models.users.dto.requests
+package com.brightside.backend.models.users.admin.dto.requests
 
 import kotlinx.serialization.Serializable
 

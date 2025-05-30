@@ -1,4 +1,4 @@
-package com.brightside.backend.models.users.dto
+package com.brightside.backend.models.users.admin.dto
 
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable

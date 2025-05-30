@@ -1,4 +1,4 @@
-package com.brightside.backend.models.users.entities
+package com.brightside.backend.models.users.admin.entities
 
 import java.time.Instant
 
