@@ -20,7 +20,7 @@ val AdminAuthPlugin = createRouteScopedPlugin("AdminAuthPlugin") {
             return@onCall
         }
 
-        val token = authHeader.removePrefix("Bearer ").trim()
+        val token = authHeader.removePrefix(BEARER_PREFIX).trim()
 
         val email: String? = try {
             JwtProvider.verifyToken(token)
