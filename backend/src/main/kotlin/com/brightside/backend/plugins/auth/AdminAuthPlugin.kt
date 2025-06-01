@@ -24,7 +24,7 @@ val AdminAuthPlugin = createRouteScopedPlugin("AdminAuthPlugin") {
 
         val email: String? = try {
             JwtProvider.verifyToken(token)
-        } catch (e: Exception) {
+        } catch (e: JWTVerificationException) {
             null
         }
 
