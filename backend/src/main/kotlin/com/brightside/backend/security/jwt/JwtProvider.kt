@@ -22,7 +22,7 @@ object JwtProvider {
             .sign(algorithm)
     }
 
-    fun verifyToken(token: String): String? {
+    fun verifyToken(token: String?): String? {
         return try {
             val verifier = JWT.require(algorithm)
                 .withIssuer(ISSUER)
