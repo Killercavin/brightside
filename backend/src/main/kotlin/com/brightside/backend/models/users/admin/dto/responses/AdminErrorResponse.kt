@@ -1,5 +1,8 @@
 package com.brightside.backend.models.users.admin.dto.responses
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class AdminErrorResponse(
     val error: String,
     val code: String? = null,
@@ -12,8 +15,7 @@ object ErrorCodes {
     const val INVALID_REQUEST = "INVALID_REQUEST"
     const val INVALID_CREDENTIALS = "INVALID_CREDENTIALS"
     const val ACCOUNT_DISABLED = "ACCOUNT_DISABLED"
-    const val INSUFFICIENT_PERMISSIONS = "INSUFFICIENT_PERMISSIONS"
-    const val RESOURCE_NOT_FOUND = "RESOURCE_NOT_FOUND"
     const val INTERNAL_ERROR = "INTERNAL_ERROR"
     const val SERVICE_ERROR = "SERVICE_ERROR"
+    const val UNAUTHORIZED = "UNAUTHORIZED"
 }
