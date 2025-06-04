@@ -3,6 +3,7 @@ package com.brightside.backend
 import com.brightside.backend.configs.*
 import com.brightside.backend.routes.configureRouting
 import com.brightside.backend.security.configureSecurity
+import com.brightside.backend.security.jwt.configureJwtAuth
 import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.contentnegotiation.*
@@ -23,6 +24,7 @@ fun Application.module() {
         })
     }
 
+    configureJwtAuth() // JWT authentication
     configureSecurity()
     configureRouting()
     configureSerialization()

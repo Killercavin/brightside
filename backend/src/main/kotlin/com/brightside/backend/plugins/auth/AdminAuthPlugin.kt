@@ -1,45 +1,55 @@
 package com.brightside.backend.plugins.auth
 
+import com.brightside.backend.infrastructure.redis.RedisClientProvider
 import com.brightside.backend.models.users.admin.dto.responses.AdminErrorResponse
 import com.brightside.backend.models.users.admin.dto.responses.ErrorCodes
-import com.brightside.backend.security.jwt.JwtProvider
-import io.ktor.http.HttpStatusCode
-import io.ktor.server.application.createRouteScopedPlugin
-import io.ktor.server.response.respond
-import io.ktor.util.AttributeKey
+import com.brightside.backend.routes.users.admin.AdminSession
+import com.brightside.backend.services.users.admin.AdminService
+import io.ktor.http.*
+import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
+import io.ktor.server.response.*
+import io.ktor.util.*
+import kotlinx.coroutines.future.await
 
 val AdminAuthPlugin = createRouteScopedPlugin("AdminAuthPlugin") {
     onCall { call ->
-        val authHeader = call.request.headers["Authorization"]
+        val principal = call.principal<JWTPrincipal>()
 
-        if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+        val email = principal?.getClaim("email", String::class)
+        if (email.isNullOrBlank()) {
             call.respond(
                 HttpStatusCode.Unauthorized,
-                AdminErrorResponse("Invalid or missing authorization header", ErrorCodes.UNAUTHORIZED)
+                AdminErrorResponse("Invalid or missing JWT claims", ErrorCodes.UNAUTHORIZED)
             )
             return@onCall
         }
 
-        val token = authHeader.removePrefix(BEARER_PREFIX).trim()
-
-        val email: String? = try {
-            JwtProvider.verifyToken(token)
-        } catch (e: JWTVerificationException) {
-            null
-        }
-
-        if (email == null) {
+        // Redis check for active session
+        val sessionKey = "refresh:$email"
+        val redisSession = RedisClientProvider.asyncCommands.get(sessionKey).await()
+        if (redisSession == null) {
             call.respond(
                 HttpStatusCode.Unauthorized,
-                AdminErrorResponse("Invalid or expired token", ErrorCodes.UNAUTHORIZED)
+                AdminErrorResponse("Session expired. Please login again.", ErrorCodes.UNAUTHORIZED)
             )
             return@onCall
         }
 
-        // store the email in call attributes
-        call.attributes.put(AuthenticatedEmailKey, email)
+        // Get admin details from DB
+        val admin = AdminService.getAdminByEmail(email)
+        if (admin == null) {
+            call.respond(
+                HttpStatusCode.Unauthorized,
+                AdminErrorResponse("Admin not found", ErrorCodes.UNAUTHORIZED)
+            )
+            return@onCall
+        }
+
+        val session = AdminSession(adminId = admin.id, email = admin.email)
+        call.attributes.put(AuthenticatedAdminSessionKey, session)
     }
 }
 
-// key can be used to access email in your route handlers
-val AuthenticatedEmailKey = AttributeKey<String>("admin_email")
+val AuthenticatedAdminSessionKey = AttributeKey<AdminSession>("admin_session")
