@@ -1,5 +1,8 @@
 package com.brightside.backend.controllers.users.admin
 
+import com.brightside.backend.models.users.admin.dto.responses.AdminProfileResponse
+import com.brightside.backend.routes.users.admin.AdminSession
+import com.brightside.backend.services.users.admin.AdminService
 import io.ktor.server.application.ApplicationCall
 
 /**
@@ -9,5 +12,12 @@ import io.ktor.server.application.ApplicationCall
 
 object AdminController {
     // Authentication operations
-    suspend fun login(call: ApplicationCall) = AdminAuthController.login(call) // login
+
+    // admin login
+    suspend fun login(call: ApplicationCall) = AdminAuthController.login(call)
+
+    // admin profile
+    suspend fun getAdminProfile(session: AdminSession): AdminProfileResponse {
+        return AdminService.getAdminProfile(session.adminId)
+    }
 }

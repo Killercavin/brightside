@@ -6,6 +6,6 @@ import kotlinx.serialization.Serializable
 data class AdminProfileResponse(
     val id: Int,
     val email: String,
-    val fullName: String?,
+    val name: String?,
     val createdAt: String,
 )
