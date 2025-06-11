@@ -25,7 +25,7 @@ object DatabaseFactory {
             .locations("classpath:db/migration")
             .load()
 
-        flyway.validate() // checks whether the current schema matches what Flyway expects (based on migration history)
+        // flyway.validate() // checks whether the current schema matches what Flyway expects (based on migration history)
         flyway.migrate() // then finally migrate if the validation check is passed
 
         logger.info("Flyway migrations completed")

@@ -34,7 +34,7 @@ fun Application.configureJwtAuth() {
             challenge { _, _ ->
                 call.respond(
                     io.ktor.http.HttpStatusCode.Unauthorized,
-                    mapOf("error" to "Token is invalid or has expired")
+                    mapOf("error" to "Token is either invalid or has expired")
                 )
             }
         }

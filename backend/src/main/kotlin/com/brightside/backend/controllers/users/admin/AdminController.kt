@@ -14,7 +14,7 @@ object AdminController {
     // Authentication operations
 
     // admin login
-    suspend fun login(call: ApplicationCall) = AdminAuthController.login(call)
+    suspend fun login(call: ApplicationCall) = AdminAuthController.adminLogin(call)
 
     // admin profile
     suspend fun getAdminProfile(session: AdminSession): AdminProfileResponse {
