@@ -45,7 +45,7 @@ dependencies {
     implementation("org.postgresql:postgresql:42.7.2")
     implementation("com.zaxxer:HikariCP:5.0.1")
     implementation("org.flywaydb:flyway-core:11.8.2") // Latest stable Flyway core
-    implementation("org.flywaydb:flyway-database-postgresql:11.8.2") // Flyway PostgresSQL plugin
+    implementation("org.flywaydb:flyway-database-postgresql:11.8.2") // Flyway PostgreSQL plugin
     implementation("at.favre.lib:bcrypt:0.10.2")
     implementation("com.auth0:java-jwt:4.5.0")
     implementation("io.lettuce:lettuce-core:6.6.0.RELEASE") // Lettuce core
