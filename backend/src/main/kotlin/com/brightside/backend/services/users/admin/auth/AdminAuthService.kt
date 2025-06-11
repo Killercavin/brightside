@@ -13,7 +13,7 @@ import kotlinx.coroutines.future.await
 
 object AdminAuthService {
 
-    suspend fun login(request: AdminLoginRequest): Result<AdminLoginResponse> {
+    suspend fun adminLogin(request: AdminLoginRequest): Result<AdminLoginResponse> {
         when (val validation = AdminLoginValidator.validate(request)) {
             is ValidationResult.Error -> return Result.failure(IllegalArgumentException(validation.message))
             is ValidationResult.Success -> Unit

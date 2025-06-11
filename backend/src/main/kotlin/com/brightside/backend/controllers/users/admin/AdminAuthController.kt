@@ -1,7 +1,6 @@
 package com.brightside.backend.controllers.users.admin
 
 import com.brightside.backend.models.users.admin.dto.requests.AdminLoginRequest
-import com.brightside.backend.models.users.admin.dto.requests.AdminRefreshTokenRequest
 import com.brightside.backend.models.users.admin.dto.responses.AdminErrorResponse
 import com.brightside.backend.models.users.admin.dto.responses.ErrorCodes
 import com.brightside.backend.services.users.admin.auth.AdminAuthService
@@ -20,10 +19,10 @@ import io.ktor.server.response.*
 
 object AdminAuthController {
 
-    suspend fun login(call: ApplicationCall) {
+    suspend fun adminLogin(call: ApplicationCall) {
         try {
             val request = parseAndValidateLoginRequest(call)
-            val result = AdminAuthService.login(request)
+            val result = AdminAuthService.adminLogin(request)
 
             result.onSuccess { response ->
                 call.respond(HttpStatusCode.OK, response)
@@ -46,28 +45,6 @@ object AdminAuthController {
             call.respond(
                 HttpStatusCode.InternalServerError,
                 AdminErrorResponse("An unexpected error occurred", ErrorCodes.INTERNAL_ERROR)
-            )
-        }
-    }
-
-    suspend fun refreshToken(call: ApplicationCall) {
-        try {
-            val request = call.receive<AdminRefreshTokenRequest>()
-            val result = AdminAuthService.refreshToken(request.refreshToken)
-            result.onSuccess { response ->
-                call.respond(HttpStatusCode.OK, response)
-            }.onFailure { error ->
-                call.respond(
-                    HttpStatusCode.Unauthorized,
-                    AdminErrorResponse("Invalid refresh token", ErrorCodes.INVALID_CREDENTIALS)
-                )
-            }
-
-        } catch (e: Exception) {
-            call.application.log.error("Error refreshing admin token", e)
-            call.respond(
-                HttpStatusCode.InternalServerError,
-                AdminErrorResponse("Token refresh failed", ErrorCodes.SERVICE_ERROR)
             )
         }
     }

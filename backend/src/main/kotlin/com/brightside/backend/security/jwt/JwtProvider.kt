@@ -7,7 +7,7 @@ import java.util.Date
 
 object JwtProvider {
     private val SECRET: String = EnvConfig.getEnv("JWT_SECRET", "") ?: error("JWT_SECRET is missing")
-    private val EXPIRY_MINUTES: Long = EnvConfig.getEnv("JWT_EXPIRY_MINUTES", "60")?.toLongOrNull() ?: 60
+    private val EXPIRY_MINUTES: Long = EnvConfig.getEnv("JWT_EXPIRY_MINUTES", "45")?.toLongOrNull() ?: 60
     private val ISSUER: String = EnvConfig.getEnv("JWT_ISSUER", "") ?: ""
 
     private val algorithm = Algorithm.HMAC256(SECRET)
