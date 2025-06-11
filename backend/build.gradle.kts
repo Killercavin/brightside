@@ -51,3 +51,9 @@ dependencies {
     implementation("io.lettuce:lettuce-core:6.6.0.RELEASE") // Lettuce core
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.10.2") // Coroutine support for Java CompletableFuture interop
 }
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
