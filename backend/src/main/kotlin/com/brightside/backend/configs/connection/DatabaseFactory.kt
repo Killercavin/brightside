@@ -34,7 +34,6 @@ object DatabaseFactory {
         logger.info("Initializing database connection")
         Database.Companion.connect(hikari())
 
-        // TODO: Remove or re-enable this block once Flyway fully manages all schema migrations.
         /*
         transaction {
             SchemaUtils.create(ProductTable)
