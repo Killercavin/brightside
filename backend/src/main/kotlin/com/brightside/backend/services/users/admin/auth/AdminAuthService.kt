@@ -22,7 +22,7 @@ class AdminAuthService(
         when (val validation = AdminLoginValidator.validate(request)) {
             is ValidationResult.Error -> {
                 logger.warn("Validation failed for email='${request.email}': ${validation.message}")
-                return Result.failure(IllegalArgumentException("Invalid email or password"))
+                return Result.failure(SecurityException("Invalid email or password"))
             }
             is ValidationResult.Success -> Unit
         }
