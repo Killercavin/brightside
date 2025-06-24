@@ -1,4 +1,4 @@
-package com.brightside.backend.extensions
+package com.brightside.backend.extensions.users.admin
 
 import com.brightside.backend.models.users.admin.dto.responses.AdminErrorCode
 import com.brightside.backend.models.users.admin.dto.responses.AdminErrorResponse
@@ -13,6 +13,9 @@ suspend fun ApplicationCall.respondError(
 ) {
     respond(
         status,
-        AdminErrorResponse(error = message, code = code)
+        AdminErrorResponse(
+            error = message,
+            code = code
+        )
     )
 }

@@ -17,7 +17,6 @@ fun Application.configureRouting() {
     val adminAuthController = AdminAuthController(adminAuthService)
     val adminController = AdminController(
         adminService = adminService,
-        adminAuthService = adminAuthService,
         adminAuthController = adminAuthController
     )
 

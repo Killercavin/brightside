@@ -1,31 +1,64 @@
 package com.brightside.backend.routes.users.admin
 
 import com.brightside.backend.controllers.users.admin.AdminController
+import com.brightside.backend.extensions.respondError
 import com.brightside.backend.extensions.users.admin.toAdminSession
+import com.brightside.backend.security.jwt.mappers.toAdminSessionOrNull
+import com.brightside.backend.models.users.admin.dto.responses.AdminErrorCode
 import com.brightside.backend.models.users.admin.dto.responses.AdminErrorResponse
-import com.brightside.backend.models.users.admin.dto.responses.ErrorCodes
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*
-import io.ktor.server.response.*
+import io.ktor.server.response.respond
 import io.ktor.server.routing.*
 
 fun Route.adminRoutes(controller: AdminController) {
     route("/api/admin") {
 
-        // Auth routes
+        // --- Public authentication routes ---
         post("/login") { controller.login(call) }
         post("/token/refresh") { controller.refreshToken(call) }
 
-        // Secure routes
+        // --- Secure routes ---
         authenticate("admin-auth") {
+
+            // GET /api/admin/me
             get("/me") {
+                val session = call.principal<JWTPrincipal>().toAdminSessionOrNull()
+                if (session == null) {
+                    call.respondError(
+                        status = HttpStatusCode.Unauthorized,
+                        message = "Invalid or missing token claims",
+                        code = AdminErrorCode.UNAUTHORIZED
+                    )
+                    return@get
+                }
+
+                try {
+                    val profile = controller.getAdminProfile(session)
+                    call.respond(HttpStatusCode.OK,
+                        profile)
+                } catch (e: Exception) {
+                    call.application.log.error("Error fetching admin profile", e)
+                    call.respondError(
+                        status = HttpStatusCode.InternalServerError,
+                        message = "Could not retrieve admin profile",
+                        code = AdminErrorCode.SERVICE_ERROR
+                    )
+                }
+            }
+
+            // GET /api/admin/{id}
+            get("/{id}") {
                 val principal = call.principal<JWTPrincipal>()
                 if (principal == null) {
                     call.respond(
                         HttpStatusCode.Unauthorized,
-                        AdminErrorResponse("JWT principal not found", ErrorCodes.UNAUTHORIZED)
+                        AdminErrorResponse(
+                            error = "JWT principal not found",
+                            code = AdminErrorCode.UNAUTHORIZED
+                        )
                     )
                     return@get
                 }
@@ -35,21 +68,15 @@ fun Route.adminRoutes(controller: AdminController) {
                 } catch (e: Exception) {
                     call.respond(
                         HttpStatusCode.Unauthorized,
-                        AdminErrorResponse("Invalid JWT claims: ${e.message}", ErrorCodes.UNAUTHORIZED)
+                        AdminErrorResponse(
+                            error = "Invalid JWT claims",
+                            code = AdminErrorCode.UNAUTHORIZED
+                        )
                     )
                     return@get
                 }
 
-                try {
-                    val profile = controller.getAdminProfile(adminSession)
-                    call.respond(HttpStatusCode.OK, profile)
-                } catch (e: Exception) {
-                    call.application.log.error("Error fetching admin profile", e)
-                    call.respond(
-                        HttpStatusCode.InternalServerError,
-                        AdminErrorResponse("Could not retrieve admin profile", ErrorCodes.SERVICE_ERROR)
-                    )
-                }
+                controller.getAdminById(call, adminSession)
             }
         }
     }

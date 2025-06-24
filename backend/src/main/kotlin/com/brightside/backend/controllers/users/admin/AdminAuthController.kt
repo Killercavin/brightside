@@ -1,11 +1,10 @@
 package com.brightside.backend.controllers.users.admin
 
 import com.brightside.backend.exceptions.ValidationException
-import com.brightside.backend.extensions.respondError
+import com.brightside.backend.extensions.users.admin.respondError
 import com.brightside.backend.models.users.admin.dto.requests.AdminLoginRequest
 import com.brightside.backend.models.users.admin.dto.requests.RefreshTokenRequest
-import com.brightside.backend.models.users.admin.dto.responses.AdminErrorResponse
-import com.brightside.backend.models.users.admin.dto.responses.ErrorCodes
+import com.brightside.backend.models.users.admin.dto.responses.AdminErrorCode
 import com.brightside.backend.services.users.admin.auth.AdminAuthService
 import com.brightside.backend.validators.users.admin.AdminLoginValidator
 import com.brightside.backend.validators.users.admin.ValidationResult
@@ -15,10 +14,6 @@ import io.ktor.server.plugins.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 
-/**
- * Controller class for admin authentication operations
- * Handles: login, refresh token, etc.
- */
 class AdminAuthController(
     private val adminAuthService: AdminAuthService
 ) {
@@ -26,49 +21,54 @@ class AdminAuthController(
     suspend fun adminLogin(call: ApplicationCall) {
         try {
             val request = parseAndValidateLoginRequest(call)
-            val result = adminAuthService.adminLogin(request)
 
-            result.onSuccess { response ->
-                call.respond(HttpStatusCode.OK, response)
-            }.onFailure { error ->
-                call.application.log.warn("Login failed for email=${request.email}: ${error.message}")
-                handleAuthError(call, error)
-            }
-
-        } catch (e: BadRequestException) {
-            call.respondError(HttpStatusCode.BadRequest, "Invalid request format", ErrorCodes.INVALID_REQUEST)
+            adminAuthService.adminLogin(request).fold(
+                onSuccess = { response ->
+                    call.respond(HttpStatusCode.OK, response)
+                },
+                onFailure = { error ->
+                    call.respondMappedAuthError(error)
+                }
+            )
         } catch (e: ValidationException) {
-            call.respondError(HttpStatusCode.BadRequest, e.message ?: "Validation failed", ErrorCodes.VALIDATION_ERROR)
+            call.respondError(
+                status = HttpStatusCode.BadRequest,
+                message = e.message ?: "Validation failed",
+                code = AdminErrorCode.VALIDATION_ERROR
+            )
+        } catch (e: BadRequestException) {
+            call.respondError(
+                status = HttpStatusCode.BadRequest,
+                message = e.message ?: "Invalid request",
+                code = AdminErrorCode.INVALID_REQUEST
+            )
         } catch (e: Exception) {
-            call.application.log.error("Unexpected error in admin login", e)
-            call.respondError(HttpStatusCode.InternalServerError, "An unexpected error occurred", ErrorCodes.INTERNAL_ERROR)
+            call.application.log.error("Unexpected login error", e)
+            call.respondError(
+                status = HttpStatusCode.InternalServerError,
+                message = "Authentication service error",
+                code = AdminErrorCode.SERVICE_ERROR
+            )
         }
     }
 
     suspend fun refreshToken(call: ApplicationCall) {
         try {
             val refreshToken = call.receive<RefreshTokenRequest>().refreshToken
-            val result = adminAuthService.refreshToken(refreshToken)
-
-            result.fold(
+            adminAuthService.refreshToken(refreshToken).fold(
                 onSuccess = { response ->
                     call.respond(HttpStatusCode.OK, response)
                 },
-                onFailure = { ex ->
-                    call.respond(
-                        HttpStatusCode.Unauthorized,
-                        AdminErrorResponse(
-                            error = ex.message ?: "Invalid refresh token",
-                            code = ErrorCodes.UNAUTHORIZED
-                        )
-                    )
+                onFailure = { error ->
+                    call.respondMappedAuthError(error)
                 }
             )
         } catch (e: Exception) {
-            call.application.log.error("Unexpected error in token refresh", e)
-            call.respond(
-                HttpStatusCode.BadRequest,
-                AdminErrorResponse("Invalid refresh token format", ErrorCodes.INVALID_REQUEST)
+            call.application.log.error("Unexpected refresh token error", e)
+            call.respondError(
+                status = HttpStatusCode.BadRequest,
+                message = "Invalid refresh token format",
+                code = AdminErrorCode.INVALID_REQUEST
             )
         }
     }
@@ -80,23 +80,36 @@ class AdminAuthController(
             throw BadRequestException("Invalid JSON format")
         }
 
-        return when (val validationResult = AdminLoginValidator.validate(request)) {
+        return when (val result = AdminLoginValidator.validate(request)) {
             is ValidationResult.Success -> request
-            is ValidationResult.Error -> throw ValidationException(validationResult.message)
+            is ValidationResult.Error -> throw ValidationException(result.message)
         }
     }
 
-    private suspend fun handleAuthError(call: ApplicationCall, error: Throwable) {
+    private suspend fun ApplicationCall.respondMappedAuthError(error: Throwable) {
         when (error) {
-            is SecurityException -> {
-                call.respondError(HttpStatusCode.Unauthorized, "Invalid credentials", ErrorCodes.INVALID_CREDENTIALS)
-            }
-            is IllegalStateException -> {
-                call.respondError(HttpStatusCode.Forbidden, "Account is disabled or locked", ErrorCodes.ACCOUNT_DISABLED)
-            }
+            is SecurityException -> respondError(
+                status = HttpStatusCode.Unauthorized,
+                message = "Invalid email or password",
+                code = AdminErrorCode.INVALID_CREDENTIALS
+            )
+            is IllegalStateException -> respondError(
+                status = HttpStatusCode.Forbidden,
+                message = "Account disabled or locked",
+                code = AdminErrorCode.ACCOUNT_DISABLED
+            )
+            is NoSuchElementException -> respondError(
+                status = HttpStatusCode.Unauthorized,
+                message = "Invalid credentials",
+                code = AdminErrorCode.UNAUTHORIZED
+            )
             else -> {
-                call.application.log.error("Auth service error", error)
-                call.respondError(HttpStatusCode.InternalServerError, "Authentication service unavailable", ErrorCodes.SERVICE_ERROR)
+                application.log.error("Unhandled auth error", error)
+                respondError(
+                    status = HttpStatusCode.InternalServerError,
+                    message = "Authentication service unavailable",
+                    code = AdminErrorCode.SERVICE_ERROR
+                )
             }
         }
     }

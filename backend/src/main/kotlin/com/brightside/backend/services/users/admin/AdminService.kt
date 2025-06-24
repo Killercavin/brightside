@@ -6,7 +6,6 @@ import com.brightside.backend.models.users.admin.entities.AdminEntity
 import com.brightside.backend.models.users.admin.tables.AdminTable
 import io.ktor.server.plugins.*
 import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.transactions.transaction
 
 class AdminService {
 
@@ -25,24 +24,42 @@ class AdminService {
         )
     }
 
-    fun getAdminByEmail(email: String): AdminEntity? {
-        return transaction {
-            AdminTable.select { AdminTable.email eq email }
-                .singleOrNull()
-                ?.let {
-                    AdminEntity(
-                        id = it[AdminTable.id].value,
-                        firstName = it[AdminTable.firstName],
-                        lastName = it[AdminTable.lastName],
-                        email = it[AdminTable.email],
-                        passwordHash = it[AdminTable.passwordHash],
-                        role = it[AdminTable.role],
-                        createdAt = it[AdminTable.createdAt].toString(),
-                        updatedAt = it[AdminTable.updatedAt].toString()
-                    )
-                }
-        }
+    // fetching admin by their email
+    suspend fun getAdminByEmail(email: String): AdminEntity? = dbQuery {
+        AdminTable
+            .select { AdminTable.email eq email }
+            .singleOrNull()
+            ?.let {
+                AdminEntity(
+                    id = it[AdminTable.id].value,
+                    firstName = it[AdminTable.firstName],
+                    lastName = it[AdminTable.lastName],
+                    email = it[AdminTable.email],
+                    passwordHash = it[AdminTable.passwordHash],
+                    role = it[AdminTable.role],
+                    createdAt = it[AdminTable.createdAt].toString(),
+                    updatedAt = it[AdminTable.updatedAt].toString()
+                )
+            }
     }
 
-    // getAdminById
+    // fetch the admin by their ID
+    suspend fun getAdminById(id: Int): AdminEntity? = dbQuery {
+        AdminTable
+            .select { AdminTable.id eq id }
+            .singleOrNull()
+            ?.let { row ->
+                AdminEntity(
+                    id = row[AdminTable.id].value,
+                    email = row[AdminTable.email],
+                    firstName = row[AdminTable.firstName],
+                    lastName = row[AdminTable.lastName],
+                    passwordHash = row[AdminTable.passwordHash],
+                    role = row[AdminTable.role],
+                    createdAt = row[AdminTable.createdAt].toString(),
+                    updatedAt = row[AdminTable.updatedAt].toString()
+                )
+            }
+    }
+
 }

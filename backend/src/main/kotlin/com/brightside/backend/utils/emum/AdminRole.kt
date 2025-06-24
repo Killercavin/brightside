@@ -1,5 +1,6 @@
 package com.brightside.backend.utils.emum
 
+import io.ktor.server.plugins.BadRequestException
 import kotlinx.serialization.Serializable
 
 @Serializable
