@@ -8,5 +8,11 @@ data class UpdateAdminRequest(
     val firstName: String? = null,
     val lastName: String? = null,
     val password: String? = null,
-    val role: AdminRole? = null // maybe only super admin can change this
+    /**
+     * The role of the admin. This property determines the administrative privileges of the user.
+     * 
+     * Business Rule: Only a super admin is allowed to change this property. Other roles do not
+     * have the necessary permissions to modify it.
+     */
+    val role: AdminRole? = null
 )
