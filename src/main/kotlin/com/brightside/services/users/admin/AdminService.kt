@@ -11,7 +11,7 @@ import com.brightside.models.users.admin.mappers.toAdminEntity
 import com.brightside.models.users.admin.tables.AdminTable
 import com.brightside.routes.users.admin.AdminSession
 import com.brightside.utils.enum.AdminRole
-import com.brightside.utils.enum.getDefaultRole
+import com.brightside.utils.enum.AdminRole.Companion.getDefaultRole
 import io.ktor.server.plugins.*
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.select
