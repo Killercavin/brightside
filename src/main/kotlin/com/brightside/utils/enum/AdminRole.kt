@@ -31,6 +31,7 @@ enum class AdminRole {
 
     // Placeholder for additional permission methods, such as canAssignRole or canSuspendAdmin,
     // which may be implemented in the future to handle more specific admin actions.
+    companion object {
+        fun getDefaultRole(): AdminRole = STAFF
+    }
 }
-
-fun getDefaultRole(): AdminRole = AdminRole.STAFF
