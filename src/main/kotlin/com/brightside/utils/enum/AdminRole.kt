@@ -9,6 +9,11 @@ enum class AdminRole {
     ADMIN,       // can manage products, orders and staff
     STAFF;       // view only, limited privileges
 
+    // function to return default role for easier reusability and encapsulation
+    companion object {
+        fun getDefaultRole(): AdminRole = STAFF
+    }
+
     fun canViewAdmin(targetRole: AdminRole, targetId: Int, requesterId: Int): Boolean {
         return when (this) {
             SUPER_ADMIN -> true
@@ -31,7 +36,4 @@ enum class AdminRole {
 
     // Placeholder for additional permission methods, such as canAssignRole or canSuspendAdmin,
     // which may be implemented in the future to handle more specific admin actions.
-    companion object {
-        fun getDefaultRole(): AdminRole = STAFF
-    }
 }
