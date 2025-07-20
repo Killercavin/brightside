@@ -11,6 +11,7 @@ import com.brightside.models.users.admin.mappers.toAdminEntity
 import com.brightside.models.users.admin.tables.AdminTable
 import com.brightside.routes.users.admin.AdminSession
 import com.brightside.utils.enum.AdminRole
+import com.brightside.utils.enum.getDefaultRole
 import io.ktor.server.plugins.*
 import org.jetbrains.exposed.sql.insertAndGetId
 import org.jetbrains.exposed.sql.select
@@ -100,7 +101,7 @@ class AdminService {
             throw ForbiddenException("You don't have permission to create users")
         }
 
-        val targetRole = request.role ?: AdminRole.STAFF
+        val targetRole = request.role ?: getDefaultRole()
 
         if (targetRole !in allowedRolesToCreate) {
             throw ForbiddenException("You cannot create users with role: $targetRole")

@@ -12,7 +12,7 @@ enum class AdminRole {
     fun canViewAdmin(targetRole: AdminRole, targetId: Int, requesterId: Int): Boolean {
         return when (this) {
             SUPER_ADMIN -> true
-            ADMIN -> targetId == requesterId || targetRole == STAFF
+            ADMIN -> targetId == requesterId || targetRole == getDefaultRole()
             STAFF -> targetId == requesterId
         }
     }
@@ -20,7 +20,7 @@ enum class AdminRole {
     fun canEditAdmin(targetRole: AdminRole, targetId: Int, requesterId: Int): Boolean {
         return when (this) {
             SUPER_ADMIN -> true // Full control
-            ADMIN -> (targetId == requesterId || targetRole == STAFF) // Self + staff
+            ADMIN -> (targetId == requesterId || targetRole == getDefaultRole()) // Self + staff
             STAFF -> targetId == requesterId // Only self
         }
     }
@@ -31,4 +31,7 @@ enum class AdminRole {
 
     // Placeholder for additional permission methods, such as canAssignRole or canSuspendAdmin,
     // which may be implemented in the future to handle more specific admin actions.
+    companion object {
+        fun getDefaultRole(): AdminRole = STAFF
+    }
 }
