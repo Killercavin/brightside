@@ -123,7 +123,7 @@ class AdminService {
                 row[passwordHash] = hashedPassword
                 row[firstName] = request.firstName
                 row[lastName] = request.lastName
-                row[role] = request.role ?: AdminRole.STAFF
+                row[role] = request.role ?: getDefaultRole()
                 row[createdAt] = Instant.now()
                 row[updatedAt] = Instant.now()
             }
