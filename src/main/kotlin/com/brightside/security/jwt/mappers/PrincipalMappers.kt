@@ -1,7 +1,7 @@
 package com.brightside.security.jwt.mappers
 
 import com.brightside.routes.users.admin.AdminSession
-import com.brightside.utils.emum.AdminRole
+import com.brightside.utils.enum.AdminRole
 import io.ktor.server.auth.jwt.*
 import org.slf4j.LoggerFactory
 

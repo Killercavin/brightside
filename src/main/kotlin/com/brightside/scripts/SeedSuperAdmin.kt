@@ -3,7 +3,7 @@ package com.brightside.scripts
 import at.favre.lib.crypto.bcrypt.BCrypt
 import com.brightside.configs.connection.DatabaseFactory
 import com.brightside.configs.connection.EnvConfig
-import com.brightside.utils.emum.AdminRole
+import com.brightside.utils.enum.AdminRole
 import com.brightside.models.users.admin.tables.AdminTable
 import mu.KotlinLogging
 import org.jetbrains.exposed.sql.insert

@@ -1,6 +1,6 @@
 package com.brightside.routes.users.admin
 
-import com.brightside.utils.emum.AdminRole
+import com.brightside.utils.enum.AdminRole
 import kotlinx.serialization.Serializable
 
 @Serializable

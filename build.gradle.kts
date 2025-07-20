@@ -50,6 +50,7 @@ dependencies {
     implementation("com.auth0:java-jwt:4.5.0")
     implementation("io.lettuce:lettuce-core:6.6.0.RELEASE") // Lettuce core
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:1.10.2") // Coroutine support for Java CompletableFuture interop
+    implementation("io.ktor:ktor-server-status-pages")
 }
 
 // configuration for JDK version
