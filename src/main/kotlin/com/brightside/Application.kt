@@ -3,6 +3,7 @@ package com.brightside
 import com.brightside.configs.appSerializersModule
 import com.brightside.configs.configureDatabases
 import com.brightside.configs.configureSerialization
+import com.brightside.plugins.configureStatusPages
 import com.brightside.routes.configureRouting
 import com.brightside.security.configureSecurity
 import com.brightside.security.jwt.configureJwtAuth
@@ -31,4 +32,5 @@ fun Application.module() {
     configureRouting()
     configureSerialization()
     configureDatabases()
+    configureStatusPages()
 }

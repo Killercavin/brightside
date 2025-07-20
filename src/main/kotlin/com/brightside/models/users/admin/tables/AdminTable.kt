@@ -1,6 +1,6 @@
 package com.brightside.models.users.admin.tables
 
-import com.brightside.utils.emum.AdminRole
+import com.brightside.utils.enum.AdminRole
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.javatime.CurrentTimestamp
 import org.jetbrains.exposed.sql.javatime.timestamp

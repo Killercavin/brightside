@@ -3,7 +3,7 @@ package com.brightside.security.jwt
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.brightside.configs.connection.EnvConfig
-import com.brightside.utils.emum.AdminRole
+import com.brightside.utils.enum.AdminRole
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*

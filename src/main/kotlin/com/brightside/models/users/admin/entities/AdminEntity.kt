@@ -1,6 +1,6 @@
 package com.brightside.models.users.admin.entities
 
-import com.brightside.utils.emum.AdminRole
+import com.brightside.utils.enum.AdminRole
 import kotlinx.serialization.Serializable
 
 // internal logic representation
