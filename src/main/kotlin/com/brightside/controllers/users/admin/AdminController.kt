@@ -74,10 +74,7 @@ class AdminController(
         val admins = adminService.getAdminsFor(session)
 
         if (admins.isEmpty()) {
-            call.respond(
-                HttpStatusCode.OK, // or NoContent
-                emptyList<AdminProfileResponse>()
-            )
+            call.respond(HttpStatusCode.NoContent)
             return
         }
 
